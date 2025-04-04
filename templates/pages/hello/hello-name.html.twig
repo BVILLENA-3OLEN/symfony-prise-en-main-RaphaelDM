@@ -1,0 +1,8 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+    <p> GO sur le site herberger par symfony hello </p>
+        <p> Vous vous appeler {{ name }} et bienvenue </p>
+        <a href="{{ path('app_index_get') }}">Retour à l'accueil</a>
+{% endblock body %}
