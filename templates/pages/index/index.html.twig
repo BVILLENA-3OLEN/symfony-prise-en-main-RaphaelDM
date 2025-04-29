@@ -1,0 +1,65 @@
+
+{% set page_title = 'app.index.title'| trans %}
+{% extends "base.html.twig" %}
+
+
+
+{% block stylesheets %}
+{{parent() }}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
+{% endblock stylesheets %}
+
+
+{% block javascripts %}
+{{parent() }}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+{% endblock javascripts %}
+
+
+{% block body %}
+
+    <p> GO sur le site herberger par symfony </p>
+    <p> Bonjour {{ nom }} et bienvenue <p>
+   
+    <nav>
+        {% if can_create %}
+            <a href="{{ path('app_post_create_get') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Formulaire Création</a>
+        {% endif %}
+    </nav>
+    <article>
+        <header>
+            <h2 class="text-center my-4 text-primary border-bottom pb-2">Les articles publiés :</h2>
+        </header>
+
+        <main class="d-flex justify-content-center align-items-center">
+            <table class="table table-striped table-bordered table-hover mt-4 shadow-sm w-auto">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-center">Date de publication</th>
+                        <th class="text-center">Titre</th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for published_post in published_posts %}
+                    <tr>
+                        <td class="text-center">
+                            <span class="badge bg-info text-white">{{ published_post.publishedAt | date('d/m/Y à H:i') }}</span>
+                        </td>
+                        <td>
+                            {{ published_post.title }}
+                        </td>
+                        <td>
+                            <a href="{{ path('app_post_show_get', {id : published_post.id}) }}" class="btn btn-primary" class = "btn btn-info">🔎👉👌🍆</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
+    </article>
+    {% if nom is not null %}
+    <a href="{{ path('app_hello_name_get', {'name': 'nom'}) }}" class="btn btn-primary">Hello index</a>
+    {% endif %}
+{% endblock body %}
